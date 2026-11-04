@@ -227,17 +227,37 @@
   </footer>
 
 
-  <div id="adOverlay" class="ad-overlay hidden">
-    <div class="ad-popup">
-      <button id="closeAd" class="close-ad" aria-label="Close">×</button>
-      <p class="eyebrow">⚠ UNEXPECTED SYSTEM EVENT</p>
-      <h2>SECRET<br><span>GLITCH!</span></h2>
-      <p>You've discovered a hidden discount code.</p>
-      <div class="coupon-code">HACK20</div>
-      <p class="ad-note">Demo promo code · 20% surprise offer</p>
-      <button id="claimAd" class="primary-btn">COPY CODE ↗</button>
-    </div>
+<div id="adOverlay" class="ad-overlay hidden">
+  <div class="ad-popup" id="adPopup">
+
+    <button id="closeAd" class="close-ad"
+      aria-label="Close advertisement">×</button>
+
+    <p class="eyebrow" id="adLabel">
+      ⚠ SYSTEM ALERT
+    </p>
+
+    <div class="ad-icon" id="adIcon">⚡</div>
+
+    <h2 id="adTitle">SECRET <span>GLITCH!</span></h2>
+
+    <p id="adDescription">
+      A hidden deal has been detected.
+    </p>
+
+    <div class="coupon-code" id="adCode">HACK20</div>
+
+    <p class="ad-note" id="adNote">
+      Limited-time demo offer
+    </p>
+
+    <button id="claimAd" class="primary-btn">
+      COPY CODE ↗
+    </button>
+
   </div>
+</div>
+
 
   <div id="toast" class="toast hidden">SYSTEM UPDATED</div>
 
@@ -525,45 +545,175 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 
+
+
+
 const adOverlay = document.getElementById("adOverlay");
+const adPopup = document.getElementById("adPopup");
 const closeAd = document.getElementById("closeAd");
 const claimAd = document.getElementById("claimAd");
 
+
+const advertisements = [
+  {
+    label: "⚠ SYSTEM BREACH DETECTED",
+    title: "SECRET <span>GLITCH!</span>",
+    description: "You found a hidden discount in the system.",
+    code: "HACK20",
+    note: "20% off · Demo coupon",
+    icon: "⚡",
+    theme: "green"
+  },
+  {
+    label: "🔥 FLASH DROP UNLOCKED",
+    title: "PRICE <span>CRASH!</span>",
+    description: "The system just dropped a massive deal.",
+    code: "CRASH40",
+    note: "40% off · Demo coupon",
+    icon: "🔥",
+    theme: "pink"
+  },
+  {
+    label: "◈ VIP ACCESS GRANTED",
+    title: "ACCESS <span>GRANTED.</span>",
+    description: "Congratulations. You've unlocked VIP savings.",
+    code: "VIP25",
+    note: "25% off · Demo coupon",
+    icon: "✦",
+    theme: "purple"
+  },
+  {
+    label: "⚠ UNEXPECTED ERROR 404",
+    title: "PRICE <span>NOT FOUND.</span>",
+    description: "Oops. The original price has disappeared.",
+    code: "ERROR30",
+    note: "30% off · Demo coupon",
+    icon: "404",
+    theme: "orange"
+  }
+];
+
+let currentAd = null;
+let lastAdIndex = -1;
+let popupTimer = null;
+
+
+function randomBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function getRandomAd() {
+  let index;
+
+  do {
+    index = randomBetween(0, advertisements.length - 1);
+  } while (index === lastAdIndex);
+
+  lastAdIndex = index;
+  return advertisements[index];
+}
+
+
+function showRandomPopup() {
+  if (!adOverlay.classList.contains("hidden")) return;
+
+  currentAd = getRandomAd();
+
+  document.getElementById("adLabel").textContent =
+    currentAd.label;
+
+  document.getElementById("adTitle").innerHTML =
+    currentAd.title;
+
+  document.getElementById("adDescription").textContent =
+    currentAd.description;
+
+  document.getElementById("adCode").textContent =
+    currentAd.code;
+
+  document.getElementById("adNote").textContent =
+    currentAd.note;
+
+  document.getElementById("adIcon").textContent =
+    currentAd.icon;
+
+  
+  adPopup.className = "ad-popup " + currentAd.theme;
+
+  adOverlay.classList.remove("hidden");
+}
+
+
+function scheduleNextPopup() {
+  clearTimeout(popupTimer);
+
+ 
+  const delay = randomBetween(25000, 60000);
+
+  popupTimer = setTimeout(() => {
+    if (document.hidden) {
+      scheduleNextPopup();
+      return;
+    }
+
+    showRandomPopup();
+  }, delay);
+}
+
+
 function hidePopup() {
+  if (adOverlay.classList.contains("hidden")) return;
+
   adOverlay.classList.add("hidden");
+  scheduleNextPopup();
 }
 
 
 window.addEventListener("load", () => {
-  const randomNumber = Math.random();
+  popupTimer = setTimeout(() => {
+    if (document.hidden) {
+      scheduleNextPopup();
+      return;
+    }
 
-  if (randomNumber < 0.90) {
-    setTimeout(() => {
-      adOverlay.classList.remove("hidden");
-    }, 3000);
-  }
+    showRandomPopup();
+  }, randomBetween(5000, 10000));
 });
+
 
 closeAd.addEventListener("click", hidePopup);
 
+
 adOverlay.addEventListener("click", event => {
-  if (event.target === adOverlay) hidePopup();
+  if (event.target === adOverlay) {
+    hidePopup();
+  }
 });
 
+
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape") hidePopup();
+  if (event.key === "Escape") {
+    hidePopup();
+  }
 });
 
 
 claimAd.addEventListener("click", async () => {
+  if (!currentAd) return;
+
+  const code = currentAd.code;
+
   try {
-    await navigator.clipboard.writeText("HACK20");
-    showToast("CODE COPIED: HACK20");
+    await navigator.clipboard.writeText(code);
+    showToast("CODE COPIED: " + code);
   } catch (error) {
-    showToast("YOUR CODE: HACK20");
+    showToast("YOUR CODE: " + code);
   }
+
   hidePopup();
 });
+
 
 
 let toastTimeout;
