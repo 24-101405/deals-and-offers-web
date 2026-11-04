@@ -831,3 +831,68 @@ body.light-mode .filter-btn.active {
 body.light-mode #cartBadge {
   color: #ffffff;
 }
+
+
+
+
+
+.ad-popup {
+  --ad-accent: #b7ff42;
+  border-color: var(--ad-accent);
+  box-shadow: 12px 12px 0 var(--pink);
+  animation: popupEnter 350ms ease-out;
+}
+
+.ad-popup.green {
+  --ad-accent: #b7ff42;
+}
+
+.ad-popup.pink {
+  --ad-accent: #ff6da9;
+}
+
+.ad-popup.purple {
+  --ad-accent: #a78bfa;
+}
+
+.ad-popup.orange {
+  --ad-accent: #ff9c42;
+}
+
+.ad-popup .eyebrow,
+.ad-popup h2 span {
+  color: var(--ad-accent);
+}
+
+.ad-popup .coupon-code {
+  color: var(--ad-accent);
+  border-color: var(--ad-accent);
+}
+
+.ad-popup .primary-btn {
+  background: var(--ad-accent);
+  border-color: var(--ad-accent);
+  color: #0b0e0c;
+}
+
+.ad-icon {
+  font-size: 55px;
+  font-weight: 900;
+  color: var(--ad-accent);
+  margin: 20px 0;
+  text-shadow: 0 0 30px var(--ad-accent);
+}
+
+@keyframes popupEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
