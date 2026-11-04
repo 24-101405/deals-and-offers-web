@@ -240,5 +240,268 @@
   </div>
 
   <div id="toast" class="toast hidden">SYSTEM UPDATED</div>
+
+
+
+  <script>
+
+    
+
+
+const deals = [
+  {
+    id: 1,
+    name: "THE BURGER GLITCH",
+    category: "food",
+    description: "A burger combo for your next cheat day.",
+    original: 400,
+    price: 240,
+    image: "assets/food.svg"
+  },
+  {
+    id: 2,
+    name: "MIDNIGHT STREETWEAR",
+    category: "fashion",
+    description: "Upgrade your fit without breaking the bank.",
+    original: 1200,
+    price: 720,
+    image: "assets/fashion.svg"
+  },
+  {
+    id: 3,
+    name: "WIRELESS FREQUENCY",
+    category: "tech",
+    description: "Premium sound. Glitched price.",
+    original: 2500,
+    price: 1500,
+    image: "assets/tech.svg"
+  },
+  {
+    id: 4,
+    name: "WEEKEND GAME PASS",
+    category: "fun",
+    description: "Unlock an afternoon of entertainment.",
+    original: 600,
+    price: 300,
+    image: "assets/fun.svg"
+  },
+  {
+    id: 5,
+    name: "LATE NIGHT CRAVINGS",
+    category: "food",
+    description: "Your favorite meal at a smaller price.",
+    original: 350,
+    price: 210,
+    image: "assets/food.svg"
+  },
+  {
+    id: 6,
+    name: "THE STYLE OVERRIDE",
+    category: "fashion",
+    description: "Your next wardrobe upgrade starts here.",
+    original: 900,
+    price: 540,
+    image: "assets/fashion.svg"
+  }
+];
+
+const inventory = {};
+let activeFilter = "all";
+
+const dealsGrid = document.getElementById("dealsGrid");
+const inventoryList = document.getElementById("inventoryList");
+
+function money(amount) {
+  return amount.toLocaleString("en-EG") + " EGP";
+}
+
+
+function renderDeals() {
+  dealsGrid.innerHTML = "";
+
+  const visibleDeals = deals.filter(deal =>
+    activeFilter === "all" || deal.category === activeFilter
+  );
+
+  visibleDeals.forEach(deal => {
+    const discount = Math.round(
+      ((deal.original - deal.price) / deal.original) * 100
+    );
+
+    const quantity = inventory[deal.id] || 0;
+
+    const card = document.createElement("article");
+    card.className = "deal-card";
+
+    card.innerHTML = `
+      <div class="deal-image">
+        <span class="discount-tag">-${discount}%</span>
+        <img src="${deal.image}" alt="${deal.name}">
+      </div>
+
+      <div class="deal-content">
+        <span class="deal-category">
+          [ ${deal.category.toUpperCase()}.EXE ]
+        </span>
+        <h3>${deal.name}</h3>
+        <p class="deal-description">${deal.description}</p>
+
+        <div class="price-line">
+          <strong>${money(deal.price)}</strong>
+          <del>${money(deal.original)}</del>
+        </div>
+
+        <div class="deal-bottom">
+          <span>ADD TO INVENTORY</span>
+          <div class="quantity-controls">
+            <button class="minus-btn" data-id="${deal.id}"
+              aria-label="Remove one ${deal.name}">−</button>
+            <strong>${quantity}</strong>
+            <button class="plus-btn" data-id="${deal.id}"
+              aria-label="Add one ${deal.name}">+</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    dealsGrid.appendChild(card);
+  });
+}
+
+
+function changeQuantity(id, amount) {
+  const current = inventory[id] || 0;
+  const next = Math.max(0, current + amount);
+
+  if (next === 0) {
+    delete inventory[id];
+  } else {
+    inventory[id] = next;
+  }
+
+  renderDeals();
+  renderInventory();
+}
+
+
+dealsGrid.addEventListener("click", event => {
+  const button = event.target.closest("button[data-id]");
+  if (!button) return;
+
+  const id = Number(button.dataset.id);
+  const amount = button.classList.contains("plus-btn") ? 1 : -1;
+
+  changeQuantity(id, amount);
+});
+
+
+document.querySelectorAll(".filter-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    activeFilter = button.dataset.filter;
+
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    renderDeals();
+  });
+});
+
+
+document.querySelectorAll(".category-card").forEach(button => {
+  button.addEventListener("click", () => {
+    activeFilter = button.dataset.category;
+
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.classList.toggle(
+        "active",
+        btn.dataset.filter === activeFilter
+      );
+    });
+
+    renderDeals();
+    document.getElementById("offers").scrollIntoView({
+      behavior: "smooth"
+    });
+  });
+});
+
+
+function renderInventory() {
+  inventoryList.innerHTML = "";
+
+  let originalTotal = 0;
+  let discountedTotal = 0;
+  let itemCount = 0;
+
+  deals.forEach(deal => {
+    const quantity = inventory[deal.id] || 0;
+    if (quantity === 0) return;
+
+    itemCount += quantity;
+    originalTotal += deal.original * quantity;
+    discountedTotal += deal.price * quantity;
+
+    const item = document.createElement("div");
+    item.className = "inventory-item";
+
+    item.innerHTML = `
+      <div>
+        <h3>${deal.name}</h3>
+        <p>${money(deal.price)} × ${quantity}</p>
+      </div>
+      <div class="quantity-controls">
+        <button class="inventory-minus" data-id="${deal.id}"
+          aria-label="Remove one ${deal.name}">−</button>
+        <strong>${quantity}</strong>
+        <button class="inventory-plus" data-id="${deal.id}"
+          aria-label="Add one ${deal.name}">+</button>
+      </div>
+    `;
+
+    inventoryList.appendChild(item);
+  });
+
+  if (itemCount === 0) {
+    inventoryList.innerHTML = `
+      <p class="empty-message">
+        NO ITEMS DETECTED. START HACKING.
+      </p>
+    `;
+  }
+
+  document.getElementById("cartBadge").textContent = itemCount;
+  document.getElementById("originalTotal").textContent =
+    money(originalTotal);
+  document.getElementById("discountedTotal").textContent =
+    money(discountedTotal);
+  document.getElementById("totalSavings").textContent =
+    money(originalTotal - discountedTotal);
+}
+
+
+inventoryList.addEventListener("click", event => {
+  const button = event.target.closest("button[data-id]");
+  if (!button) return;
+
+  const amount = button.classList.contains("inventory-plus") ? 1 : -1;
+  changeQuantity(Number(button.dataset.id), amount);
+});
+
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  Object.keys(inventory).forEach(id => delete inventory[id]);
+  renderDeals();
+  renderInventory();
+});
+
+
+renderDeals();
+renderInventory();
+
+
+
+  </script>
 </body>
 </html>
