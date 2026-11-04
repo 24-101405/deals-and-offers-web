@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEAL.EXE | Hack the Price</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body class="dark-mode">
+
+    
+  <header class="navbar">
+    <a href="#home" class="logo">DEAL<span>.EXE</span></a>
+
+    <nav>
+      <a href="#home">HOME</a>
+      <a href="#categories">PORTALS</a>
+      <a href="#offers">GLITCH DEALS</a>
+      <a href="#flash">FLASH DROPS</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button id="themeBtn" class="outline-btn">☀ MODE</button>
+      <a href="#inventory" class="cart-link">
+        INVENTORY <span id="cartBadge">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+   
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">● SYSTEM ONLINE // CAIRO, EGYPT</p>
+        <h1>HACK<br>THE <span>PRICE.</span></h1>
+        <p class="hero-description">
+          Your wallet deserves a cheat code.
+          Discover unreal discounts on food, fashion,
+          tech and everything in between.
+        </p>
+        <div class="hero-buttons">
+          <a href="#offers" class="primary-btn">EXPLORE DEALS ↗</a>
+          <a href="#categories" class="outline-btn">ACCESS PORTALS</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>50%+</strong><small>PRICE GLITCHES</small></div>
+          <div><strong>24/7</strong><small>DEAL ACCESS</small></div>
+          <div><strong>EGP</strong><small>LOCAL SAVINGS</small></div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-orbit">
+          <img src="assets/hero-chip.svg" alt="Futuristic chip">
+        </div>
+        <div class="floating-label">[ PRICE SYSTEM OVERRIDE ]</div>
+        <div class="floating-discount">-70%</div>
+      </div>
+    </section>
+
+   
+    <div class="ticker">
+      <div class="ticker-text">
+        ⚡ UNLOCK THE GLITCH &nbsp; ✦ &nbsp;
+        BIG DEALS. SMALL PRICES. &nbsp; ✦ &nbsp;
+        YOUR WALLET HAS ENTERED CHEAT MODE &nbsp; ✦ &nbsp;
+        ⚡ UNLOCK THE GLITCH
+      </div>
+    </div>
+
+   
+    <section id="categories" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 // CHOOSE YOUR DESTINATION</p>
+          <h2>ENTER A <span>PORTAL_</span></h2>
+        </div>
+        <p>Four worlds. Infinite ways to save.</p>
+      </div>
+
+      <div class="category-grid">
+        <button class="category-card" data-category="food">
+          <span>01 / FOOD.EXE</span>
+          <img src="assets/food.svg" alt="Food">
+          <h3>FOOD & DRINKS ↗</h3>
+        </button>
+        <button class="category-card" data-category="fashion">
+          <span>02 / STYLE.EXE</span>
+          <img src="assets/fashion.svg" alt="Fashion">
+          <h3>FASHION ↗</h3>
+        </button>
+        <button class="category-card" data-category="tech">
+          <span>03 / TECH.EXE</span>
+          <img src="assets/tech.svg" alt="Technology">
+          <h3>ELECTRONICS ↗</h3>
+        </button>
+        <button class="category-card" data-category="fun">
+          <span>04 / FUN.EXE</span>
+          <img src="assets/fun.svg" alt="Entertainment">
+          <h3>ENTERTAINMENT ↗</h3>
+        </button>
+      </div>
+    </section>
+
+    
+    <section id="offers" class="section offers-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 // PRICES HAVE BEEN COMPROMISED</p>
+          <h2>GLITCH <span>DEALS_</span></h2>
+        </div>
+        <p>Demo offers. Real savings calculations.</p>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">ALL DEALS</button>
+        <button class="filter-btn" data-filter="food">FOOD</button>
+        <button class="filter-btn" data-filter="fashion">FASHION</button>
+        <button class="filter-btn" data-filter="tech">TECH</button>
+        <button class="filter-btn" data-filter="fun">FUN</button>
+      </div>
+
+      <div id="dealsGrid" class="deals-grid"></div>
+    </section>
+
+  
+    <section id="flash" class="section flash-section">
+      <div class="flash-copy">
+        <p class="eyebrow">03 // LIMITED TIME ACCESS</p>
+        <h2>FLASH<br><span>DROP_</span></h2>
+        <p>Time is running out. The next price glitch
+          won't wait for you.</p>
+        <a href="#offers" class="primary-btn">CLAIM A DEAL ↗</a>
+      </div>
+
+      <div class="countdown-panel">
+        <p>TIME UNTIL SYSTEM RESET</p>
+        <div class="countdown">
+          <div><strong id="hours">00</strong><small>HOURS</small></div>
+          <b>:</b>
+          <div><strong id="minutes">00</strong><small>MINUTES</small></div>
+          <b>:</b>
+          <div><strong id="seconds">00</strong><small>SECONDS</small></div>
+        </div>
+        <p class="countdown-status">● COUNTDOWN ACTIVE</p>
+      </div>
+    </section>
+
+   
+    <section id="how" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">04 // THE PROTOCOL</p>
+          <h2>HOW TO <span>HACK_</span></h2>
+        </div>
+      </div>
+
+      <div class="steps-grid">
+        <article class="step-card">
+          <span>STEP_01</span>
+          <h3>FIND THE GLITCH</h3>
+          <p>Explore categories and discover discounts.</p>
+        </article>
+        <article class="step-card">
+          <span>STEP_02</span>
+          <h3>BUILD INVENTORY</h3>
+          <p>Use + and - to select your favorite deals.</p>
+        </article>
+        <article class="step-card">
+          <span>STEP_03</span>
+          <h3>COUNT YOUR SAVINGS</h3>
+          <p>Watch your total discount update instantly.</p>
+        </article>
+      </div>
+    </section>
+
+  
+    <section id="inventory" class="section inventory-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">05 // YOUR PERSONAL DATABASE</p>
+          <h2>MY <span>INVENTORY_</span></h2>
+        </div>
+      </div>
+
+      <div class="inventory-layout">
+        <div class="inventory-list" id="inventoryList">
+          <p class="empty-message">NO ITEMS DETECTED. START HACKING.</p>
+        </div>
+
+        <aside class="summary">
+          <p class="eyebrow">SAVINGS REPORT.EXE</p>
+          <div class="summary-row">
+            <span>Original total</span>
+            <strong id="originalTotal">0 EGP</strong>
+          </div>
+          <div class="summary-row">
+            <span>Discounted total</span>
+            <strong id="discountedTotal">0 EGP</strong>
+          </div>
+          <div class="summary-savings">
+            <span>YOU SAVED</span>
+            <strong id="totalSavings">0 EGP</strong>
+          </div>
+          <button id="clearBtn" class="outline-btn full-btn">
+            CLEAR INVENTORY ×
+          </button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  
+  <footer>
+    <div>
+      <a href="#home" class="logo">DEAL<span>.EXE</span></a>
+      <p>BREAK THE SYSTEM. NOT THE BANK.</p>
+    </div>
+    <div>
+      <a href="#categories">PORTALS</a>
+      <a href="#offers">OFFERS</a>
+      <a href="#inventory">INVENTORY</a>
+    </div>
+    <p>© 2026 DEAL.EXE // MADE IN EGYPT</p>
+  </footer>
+
+
+  <div id="adOverlay" class="ad-overlay hidden">
+    <div class="ad-popup">
+      <button id="closeAd" class="close-ad" aria-label="Close">×</button>
+      <p class="eyebrow">⚠ UNEXPECTED SYSTEM EVENT</p>
+      <h2>SECRET<br><span>GLITCH!</span></h2>
+      <p>You've discovered a hidden discount code.</p>
+      <div class="coupon-code">HACK20</div>
+      <p class="ad-note">Demo promo code · 20% surprise offer</p>
+      <button id="claimAd" class="primary-btn">COPY CODE ↗</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden">SYSTEM UPDATED</div>
+</body>
+</html>
